@@ -23,16 +23,14 @@
         @endif
         <div class="flex justify-center ml-10 mt-8">
             <div class="overflow-x-auto">
-                <a class="bg-green-500 px-1 py-1 text-white font-semibold rounded-md hover:bg-green-600" href="/students/pdf">descargar</a>
                 <table class="w-[70rem] mx-auto table-auto border-collapse border border-gray-800">
                     <thead>
                         <tr class="bg-gray-800 text-white text-sm">
                             <th class="px-2 py-1">Matrícula</th>
                             <th class="px-2 py-1">Nombre del alumno</th>
                             <th class="px-2 py-1">Apellido</th>
-                            <th class="px-2 py-1">Ver</th>
-                            <th class="px-2 py-1">Editar</th>
-                            <th class="px-2 py-1">Delete</th>
+                            <th class="px-2 py-1">foto</th>
+                            <th class="px-2 py-1">Opciones</th>
                             <th class="px-2 py-1">Descargar</th>
                         </tr>
                     </thead>
@@ -42,36 +40,38 @@
                             <td class="border px-2 py-2">{{ $student->id_student }}</td>
                             <td class="border px-2 py-2">{{ $student->name_student }}</td>
                             <td class="border px-2 py-2">{{ $student->lastname_student }}</td>
+                            <td class="border px-2 py-2">img</td>
                             <td class="border px-2 py-2">
-                                <form>
-                                    <a class="bg-blue-500 px-1 py-1 text-white font-semibold rounded-md hover:bg-blue-600" href="{{ route('estudiantes.show', $student->id) }}">Mostrar</a>
+                                <div class="flex items-center justify-center">
+                                <form action="{{ route('estudiantes.show', $student->id) }}">
+                                    <button class="bg-blue-500 px-1 py-1 m-4 text-white font-semibold rounded-md hover:bg-blue-600">Mostrar</button>
                                 </form>
-                            </td>
-                            <td class="border px-2 py-2">
-                                <form>
-                                    <a class="bg-green-500 px-1 py-1 text-white font-semibold rounded-md hover:bg-green-600" href="{{ route('estudiantes.edit', $student->id) }}">Editar</a>
+                                <form action="{{ route('estudiantes.edit', $student->id) }}">
+                                    <button type="submit" class="bg-green-500 px-1 py-1 m-4 text-white font-semibold rounded-md hover:bg-green-600">Editar</button>
                                 </form>
-                            </td>
-                            <td class="border px-2 py-2">
                                 <form action="{{ route('estudiantes.destroy', $student->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?')"
-                                        class="bg-red-500 px-1 py-1 text-white font-semibold rounded-md hover:bg-red-600">
+                                        class="bg-red-500 px-1 py-1 m-4 text-white font-semibold rounded-md hover:bg-red-600">
                                         Eliminar
                                     </button>
                                 </form>
+                                </div>
+                            </td>
                                 <td class="border px-2 py-2">
                                     <form>
                                         <a class="bg-red-400 px-1 py-1 text-white font-semibold rounded-md hover:bg-red-400" href="{{ route('student.download-pdf', $student->id) }}">Descargar</a>
                                     </form>
-                                </td>
                             </td>
                         </tr>
                     @endforeach
-                    
                     </tbody>
                 </table>
+                <div class="flex justify-center mt-4">
+                    {{ $students->links() }}
+                </div>
+                
             </div>
         </div>
 
